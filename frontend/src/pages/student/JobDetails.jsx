@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -13,6 +14,8 @@ function JobDetails() {
 
   // Get job ID from URL
   const { id } = useParams();
+
+  const [applied,setApplied] = useState(false);
 
   // Find the selected job
   const job = jobs.find((job) => job.id === Number(id));
@@ -32,7 +35,7 @@ function JobDetails() {
         </p>
 
         <Link
-          to="/opportunities"
+          to="/student/opportunities"
           className="inline-flex items-center gap-2 mt-6 px-5 py-3 bg-slate-900 text-white rounded-xl"
         >
           <ArrowLeft size={18} />
@@ -50,7 +53,7 @@ function JobDetails() {
       {/* Back Button */}
 
       <Link
-        to="/opportunities"
+        to="/student/opportunities"
         className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 mb-6"
       >
         <ArrowLeft size={17} />
@@ -155,7 +158,17 @@ function JobDetails() {
         {/* Main Content */}
 
         <div className="md:col-span-2 space-y-6">
+          <div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 sticky top-6">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Ready to apply?
+              </h2>
 
+              <p className="text-sm text-slate-500 mt-2 leading-6">
+                Start your application for this oppurtunity.
+              </p>
+            </div>
+          </div>
 
           {/* About Job */}
 
@@ -245,10 +258,12 @@ function JobDetails() {
             </p>
 
 
-            <button
-              className="w-full mt-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition"
-            >
-              Apply Now
+            <button onClick={() => setApplied(true)} disabled={applied}
+              className={`w-full mt-6 py-3 rounded-xl font-medium transition ${applied
+                ? "bg-emerald-100 text-emerald-700 " : 
+                "bg-indigo-600 text-white hover:bg-indigo-700"
+              }`}>
+              {applied ? "Application Submitted" : "Apply Now"}
             </button>
 
           </div>
